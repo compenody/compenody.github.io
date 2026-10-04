@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tr-TR" dir="ltr">
+	<head id="head">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" :content="">
+		<title>Anasayfa - Adaçal Endüstriyel Mineraller</title>
+		<link rel="stylesheet" href="/css/layout.css">
+		<link rel="stylesheet" href="/css/decoration.css">
+		<link rel="stylesheet" href="/highlight.css">
+		<!-- mathtex -->
+		<link rel="stylesheet" href="/Temml-Local.css">
+		<script defer src="/temml.min.js"></script>
+		<script defer src="/render-mathtex.js"></script>
+		<!-- /mathtex -->
+		<script defer src="/nav-scroll.js"></script>
+		<script defer src="/slider.js"></script>
+		<script defer src="/animate.js"></script>
+		<link rel="icon" type="image/png" sizes="40x40" href="/icons/adacal-40x40.png">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+		<link rel="manifest" href="/icons/manifest.json">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0">
+		
+	<style>
+		/* page-specific: alternating image/text bands on the home page */
+		.row-extra {
+			--grad-dir: to left;
+			--row-grad-color: var(--color-mantle);
+			align-items: center;
+			background: linear-gradient(var(--grad-dir),
+			color-mix(in srgb, var(--row-grad-color) 95%, transparent) 0%,
+			color-mix(in srgb, var(--row-grad-color) 15%, transparent) 55%,
+			transparent 90%);
+			border-radius: var(--radius-lg);
+			padding: 1rem;
+		}
+		.row-extra p {
+			hyphens: none;
+		}
+		.row-extra > figure {
+			margin-block: 0;
+			align-self: center;
+		}
+		.row-extra.reversed {
+			--grad-dir: to right;
+		}
+		.row-extra.green {
+			--row-grad-color: #228b22;
+		}
+		.row-extra.turkish-red {
+			--row-grad-color: #c8102e;
+		}
+		.row-image-extra {
+			--inline-margin: 0;
+			margin-inline: var(--inline-margin);
+		}
+		.row-image-extra.left {
+			--inline-margin: 20%;
+		}
+		.row-image-extra.right {
+			--inline-margin: -20%;
+		}
+	</style>
+
+	</head>
+	<body id="body">
+		<nav class="navigation overlay">
+			<a class="image" href="/">
+				<img src="/logos/adacal.svg" alt="Adaçal">
+			</a>
+
+			<div class="links">
+				<a class="link" href="/">Anasayfa</a>
+				<a class="link" href="/about/">Hakkımızda</a>
+
+				<div class="dropdown">
+					<a class="link trigger" href="/laboratory/">
+						<span>Laboratuvar</span>
+						<i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+					</a>
+					<div class="menu">
+						
+							<div class="dropdown">
+								<a class="trigger" href="/laboratory/equipments/">Ekipmanlar</a>
+								<div class="menu">
+									<a href="/laboratory/equipments/laser-particle-size-analyser/">Lazer Tane Boyutu Ölçüm Cihazı</a>
+								
+									<a href="/laboratory/equipments/color-and-brightness-analyser/">Renk ve Beyazlık Ölçüm Cihazı</a>
+								
+									<a href="/laboratory/equipments/rheology-and-viscosity-analyser/">Reoloji-Viskozite Ölçüm Cihazı</a>
+								
+									<a href="/laboratory/equipments/sem/">SEM - Taramalı Elektron Mikroskobu</a>
+								
+									<a href="/laboratory/equipments/xrf-spectrometer/">XRF Spektrometresi</a>
+								
+									<a href="/laboratory/equipments/density-measurer/">Yoğunluk Ölçüm Cihazı</a>
+								
+									<a href="/laboratory/equipments/bet-analyser/">Yüzey Alanı Ölçüm Cihazı (BET)</a>
+								
+									<a href="/laboratory/equipments/zeta-potential-measurer/">Zeta Potansiyeli Ölçüm Cihazı</a>
+								</div>
+							</div>
+						
+						
+					
+						
+							<div class="dropdown">
+								<a class="trigger" href="/laboratory/services/">Hizmetler</a>
+								<div class="menu">
+									<a href="/laboratory/services/chemical-analysis/">Kimyasal Analiz (XRF)</a>
+								
+									<a href="/laboratory/services/morphology-analysis/">Morfoloji Analizi (SEM)</a>
+								
+									<a href="/laboratory/services/color-and-brightness-analysis/">Renk ve Beyazlık Ölçümü</a>
+								
+									<a href="/laboratory/services/rheology-and-viscosity-analysis/">Reoloji ve Viskozite Analizi</a>
+								
+									<a href="/laboratory/services/particle-size-analysis/">Tane Boyutu Analizi</a>
+								
+									<a href="/laboratory/services/density-measurement/">Yoğunluk Ölçümü</a>
+								
+									<a href="/laboratory/services/surface-area-and-porosity-analysis/">Yüzey Alanı ve Gözeneklilik Analizi (BET)</a>
+								
+									<a href="/laboratory/services/zeta-potential-measurement/">Zeta Potansiyeli Ölçümü</a>
+								</div>
+							</div>
+						
+						
+					</div>
+				</div>
+
+				<div class="dropdown">
+					<a class="link trigger" href="/products/">
+						<span>Ürünler</span>
+						<i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+					</a>
+					<div class="menu">
+						
+						
+							<a href="/products/agrega/">Adaçal Agrega</a>
+						
+					
+						
+						
+							<a href="/products/kirec/">Adaçal Kireç</a>
+						
+					
+						
+						
+							<a href="/products/pcc/">adaCAL PCC</a>
+						
+					</div>
+				</div>
+
+				<div class="dropdown">
+					<!-- no page behind it: tabindex lets the keyboard open the menu -->
+					<span class="link trigger" tabindex="0">
+						<span>Medya</span>
+						<i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+					</span>
+					<div class="menu">
+						<a href="/media/blog/">Blog</a>
+					
+						<a href="/media/news/">Haberler</a>
+					</div>
+				</div>
+
+				<a class="link" href="/about/documents/">Belgeler</a>
+				<a class="link" href="/about/contact/">İletişim</a>
+			</div>
+
+			<div class="links locale">
+				<div class="dropdown">
+					<span class="link trigger" tabindex="0">
+						<i class="fa-solid fa-language" aria-hidden="true"></i>
+						<span>Türkçe</span>
+						<i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+					</span>
+					<div class="menu">
+						
+							<a href="/">Türkçe</a>
+						
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		
+
+		
+	<section class="intro">
+		<div class="slider full" data-arrows="false" data-dots="false">
+			<div class="track">
+				<div class="slide">
+					<img src="/blondie.jpg" alt="">
+					<div class="caption reveal left">
+						<h1>Endüstriyel Çözümler Güçlü Yarınlar</h1>
+						
+							<a class="button" href="about">Hemen Keşfet</a>
+						
+					</div>
+				</div>
+			
+				<div class="slide">
+					<img src="/image-1-rescaled.webp" alt="">
+					<div class="caption reveal left">
+						<h1>Mineraller ile Geleceğe Güç Katıyoruz</h1>
+						
+							<a class="button" href="products">Ürünlerimiz</a>
+						
+					</div>
+				</div>
+			
+				<div class="slide">
+					<img src="/oven-assembly.jpg" alt="">
+					<div class="caption reveal left">
+						<h1>Güvenilir Kaynak Çözümleri</h1>
+						
+							<a class="button" href="laboratory/equipments">Laboratuvarımızı Keşfet</a>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="content">
+		<div class="col">
+			<div class="row row-extra reveal left">
+				<div class="col reveal right"><div id="paragraph-1"><h1>Bilimle İlerliyoruz</h1><p>Seçimli madencilikle yüksek tenörü ocakta yakalıyor, her partiyi kendi laboratuvarımızda analiz ederek tutarlı kaliteyi garanti ediyoruz.</p><p><a class="button " href="/laboratory/services/">Hizmetlerimize göz atın</a></p></div></div>
+				<figure>
+					<img class="row-image-extra left" src="/skolohedral.png" alt="">
+				</figure>
+			</div>
+
+			<div class="row row-extra reversed turkish-red reveal right">
+				<figure>
+					<img class="row-image-extra right" src="/turk-flag-w-globe.jpeg" alt="">
+				</figure>
+				<div class="col reveal left"><div id="paragraph-2"><h1>Bizimkisi Memleket Meselesi</h1><p>Türkiye’de PCC üretip dünyaya ihraç eden ilk ve tek firmayız; bunun haklı gururunu taşıyoruz. Sürdürülebilir üretim ve güçlü iş ortaklıklarıyla ülkemizi global pazarda temsil ediyoruz.</p><p><a class="button " href="/products/pcc/">PCC ürün bilgisi için tıklayın</a></p></div></div>
+			</div>
+
+			<div class="row row-extra green reveal left">
+				<div class="col reveal right"><div id="paragraph-3"><h1>Gezegenimizi Önemsiyoruz</h1><p>Sıfır atık belgeli fabrikamız ve kırma-eleme tesislerimizde dünyamıza zarar vermemek için çabalıyor ve sıfır karbon emisyonunu hedefliyoruz.</p><p><a class="button " href="/about/documents/cevre-politikasi/document.pdf">Çevre politikamıza göz atın</a></p></div></div>
+				<figure>
+					<img class="row-image-extra left" src="/green-peace.jpeg" alt="">
+				</figure>
+			</div>
+
+			<div class="row row-extra reversed reveal right">
+				<figure>
+					<img class="row-image-extra right" src="/working-together.jpeg" alt="">
+				</figure>
+				<div class="col reveal left"><div id="paragraph-4"><h1>Bizimle Çalışmak İster misiniz?</h1><p>Çalışanımızın potansiyelini geliştiren, güvenli, adil ve sürekli öğrenmeyi destekleyen bir çalışma ortamı oluşturarak birlikte büyüyor, birlikte başarıyoruz.</p><p><a class="button " href="/about/contact/">İletişime Geçin</a></p></div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- whole section is skipped when there are no posts, heading included -->
+	<div class="content">
+		<h1>Son Haberler</h1>
+		<div class="slider">
+			<div class="track">
+				
+					
+						<a class="slide card media" href="/media/news/1bd58eee-cc27-4841-834f-50e8ab60eba4/">
+							
+								<div class="thumb">
+									<img src="/media/news/1bd58eee-cc27-4841-834f-50e8ab60eba4/cover.svg" alt="">
+								</div>
+							
+							<div class="meta">
+								<h3 class="title">Adaçal Endüstriyel Mineraller&apos;de Kurumsal Yapay Zeka Dönüşümü</h3>
+								
+									<p class="excerpt">Adaçal Endüstriyel Mineraller, 24-25 Haziran 2026&apos;da Sembol Bilişim iş birliğiyle iki günlük Kurumsal Yapay Zeka Farkındalık ve Dönüşüm Eğitimi düzenledi. Yöneticiler ve teknik ekipler için ayrı kurgulanan program, çalışanlara AI araçlarını günlük işlerine entegre etme becerisi kazandırdı</p>
+								
+								
+									<time class="date">25.06.2026</time>
+								
+							</div>
+						</a>
+					
+				
+					
+						<a class="slide card media" href="/media/news/19fd2257-b2ce-4145-a39d-465a1833d241/">
+							
+								<div class="thumb">
+									<img src="/media/news/19fd2257-b2ce-4145-a39d-465a1833d241/cover.svg" alt="">
+								</div>
+							
+							<div class="meta">
+								<h3 class="title">Paint İstanbul Katılımı</h3>
+								
+									<p class="excerpt">Adaçal ekibi, 17-19 Haziran 2026&apos;da İstanbul&apos;da düzenlenen Paintistanbul 2026&apos;da yer aldı. 43 ülkeden 10 binden fazla ziyaretçinin katıldığı fuarda iş ortaklarıyla görüşüldü, yeni iş birliği fırsatları değerlendirildi.</p>
+								
+								
+									<time class="date">19.06.2026</time>
+								
+							</div>
+						</a>
+					
+				
+					
+						<a class="slide card media" href="/media/news/e4b460ba-c835-4c7e-9859-067a6b6f4069/">
+							
+								<div class="thumb">
+									<img src="/media/news/e4b460ba-c835-4c7e-9859-067a6b6f4069/cover.png" alt="">
+								</div>
+							
+							<div class="meta">
+								<h3 class="title">Nürnberg European Coating Show 2025</h3>
+								
+									<p class="excerpt">Adaçal, 25-27 Mart 2025&apos;te Nürnberg&apos;de düzenlenen European Coatings Show 2025&apos;te yer aldı. 60&apos;tan fazla ülkeden 1.200&apos;ü aşkın katılımcının buluştuğu fuarda, boya formüllerinde TiO₂ ikamesiyle maliyet avantajı sağlayan adaCAL PCC öne çıktı</p>
+								
+								
+									<time class="date">25.03.2025</time>
+								
+							</div>
+						</a>
+					
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		<h1>Son Bloglar</h1>
+		<div class="cards">
+			
+				
+					<a class="card media" href="/media/blog/f3a6c6e5-eaa9-4869-af05-20399d129227/">
+						
+							<div class="thumb">
+								<img src="/media/blog/f3a6c6e5-eaa9-4869-af05-20399d129227/cover.jpg" alt="">
+							</div>
+						
+						<div class="meta">
+							<h3 class="title">Adaçal Kireç</h3>
+							
+							
+								<time class="date">10.07.2026</time>
+							
+						</div>
+					</a>
+				
+			
+				
+					<a class="card media" href="/media/blog/87cfba25-7e38-4565-9e7f-da241acf42a0/">
+						
+							<div class="thumb">
+								<img src="/media/blog/87cfba25-7e38-4565-9e7f-da241acf42a0/cover.webp" alt="">
+							</div>
+						
+						<div class="meta">
+							<h3 class="title">Adaçal Laboratuvar</h3>
+							
+							
+								<time class="date">10.07.2026</time>
+							
+						</div>
+					</a>
+				
+			
+				
+					<a class="card media" href="/media/blog/7c7f8a14-f1a9-4d77-b185-5a09271a6926/">
+						
+							<div class="thumb">
+								<img src="/media/blog/7c7f8a14-f1a9-4d77-b185-5a09271a6926/cover.webp" alt="">
+							</div>
+						
+						<div class="meta">
+							<h3 class="title">Adaçal Agrega</h3>
+							
+							
+								<time class="date">10.07.2026</time>
+							
+						</div>
+					</a>
+				
+			
+				
+			
+				
+			
+		</div>
+	</div>
+
+	<!--<div class="content slider" :if="$page.custom.get?('gallery')">
+		<div class="track" :loop="$if">
+			<div class="slide">
+				<img src="$page.asset($loop.it).link()" alt="">
+			</div>
+		</div>
+	</div>-->
+
+
+		<footer class="footer col">
+			<div class="row">
+				<div><div id="about-us"><h1>Hakkımızda</h1><p>Adaçal A.Ş., 2000 yılında kurulmuş; yüksek cevher kalitesi, gelişmiş teknolojisi ve üretimdeki titizliğiyle sektöründe haklı bir isim edinmiştir.</p></div></div>
+				<div><div id="corporate"><h1>Kurumsal</h1><ul><li><a href="/privacy-policy/">Gizlilik Politikası</a></li><li><a href="/personal-data-protection/">K.V.K.K.</a></li><li><a href="https://e-sirket.mkk.com.tr/?page=company&company=17323" target="_blank">Bilgi Toplumu Hizmeti</a></li></ul></div></div>
+				<div><div id="our-products"><h1>Ürünlerimiz</h1><ul><li><a href="/products/agrega/">Agrega</a></li><li><a href="/products/kirec/">Kireç</a></li><li><a href="/products/pcc/">PCC</a></li></ul></div></div>
+				<div><div id="contact-us"><h1>Bize Ulaşın</h1><ul><li><a href="https://maps.app.goo.gl/AhiZDU6F7rS4CnzS6" target="_blank">Menderes Mh. Emir Afşin Bulvarı No:214, Emirdağ/Afyonkarahisar</a></li><li>+90 272 442 83 20</li><li><a href="mailto:adacal@adacal.com.tr">adacal@adacal.com.tr</a></li></ul></div></div>
+			</div>
+			<div class="row">
+				<a class="image" href="https://beraholding.com.tr" target="_blank" rel="noopener">
+					<img src="/logos/bera-red.png" alt="Bera Holding">
+				</a>
+			</div>
+		</footer>
+	</body>
+</html>

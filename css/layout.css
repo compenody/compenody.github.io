@@ -1,0 +1,744 @@
+/* layout.css — structure only: display, position, size, spacing, flex/grid.
+   Color, border, shadow, font, motion → decoration.css.
+
+   Naming:
+     block    .navigation, .card, .slider …     a component
+     part     .navigation .image                a child inside a block  (descendant)
+     variant  .navigation.scrolled              a kind/state of a block (same element)
+   Parts never carry the block class, so they never inherit the block's rules. */
+
+/* Declared in both files; the first one loaded fixes the order. Later layer wins. */
+@layer reset, layout, decoration, utilities;
+
+/* ========================================================================== */
+@layer reset {
+
+    /* SVG excluded: all:unset would override fill="" and reset path `d` to none. */
+    *:not(svg, svg *) {
+        all: unset;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    head,
+    title,
+    meta,
+    link,
+    style,
+    script,
+    template,
+    [hidden] {
+        display: none;
+    }
+
+    /* all:unset makes everything inline; give block elements their block back. */
+    html,
+    body,
+    header,
+    main,
+    footer,
+    nav,
+    section,
+    article,
+    aside,
+    div,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol,
+    li,
+    dl,
+    dt,
+    dd,
+    figure,
+    figcaption,
+    blockquote,
+    pre,
+    form,
+    fieldset,
+    address,
+    hr {
+        display: block;
+    }
+
+    img,
+    svg,
+    video,
+    picture,
+    canvas {
+        display: block;
+        max-width: 100%;
+    }
+
+    table {
+        display: table;
+        border-collapse: collapse;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tbody {
+        display: table-row-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    tr {
+        display: table-row;
+    }
+
+    th,
+    td {
+        display: table-cell;
+    }
+
+    a,
+    button,
+    summary,
+    label[for] {
+        cursor: pointer;
+    }
+
+    /* all:unset also deletes the focus ring. Keyboard users need it. */
+    :focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+}
+
+/* ========================================================================== */
+@layer layout {
+    :root {
+        --gap: clamp(1ch, 2vw, 2ch);
+        --gutter: clamp(1rem, 6vw, 12.5vw);
+        --content-width: min(80vw, 120ch);
+
+        --space-xs: .25rem;
+        --space-sm: .5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+
+        --logo-height: 4rem;
+        --logo-height-scrolled: 2.2rem;
+        --logo-height-mobile: 3rem;
+        --logo-ratio: 100 / 25;
+        /* the mark's viewBox width / height */
+
+        --media-height: clamp(240px, 100vh, 500px);
+        --thumb-ratio: 16 / 9;
+        --z-overlay: 100;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+
+        /* footer sits at the bottom on short pages, whatever comes before it */
+        &>.footer {
+            margin-block-start: auto;
+        }
+    }
+
+    /* --- navigation ------------------------------------------------------- */
+    /* <nav class="navigation [overlay] [scrolled]">
+         <a class="image"><svg|img></a>
+         <div class="links"> <div class="dropdown">… </div> <a class="link">…</a> </div>
+         <div class="links locale">…</div>
+       </nav> */
+    .navigation {
+        position: sticky;
+        top: 0;
+        z-index: var(--z-overlay);
+        display: flex;
+        align-items: end;
+        gap: var(--gap);
+        padding: var(--space-md) var(--gutter);
+
+        /* The link box is sized, the logo fills it. Sizing the inline <svg> itself
+           with width:auto fails: an outer <svg>'s auto width means 100% of its
+           parent, and inside a flex item that collapses to 0. */
+        & .image {
+            flex-shrink: 0;
+            height: var(--logo-height);
+            aspect-ratio: var(--logo-ratio);
+
+            &> :is(img, svg) {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                /* never stretch if the ratio is off */
+            }
+        }
+
+        & .links {
+            display: flex;
+            align-items: center;
+            gap: clamp(var(--space-md), 1.8vw, var(--space-xl));
+            margin-inline: auto;
+            /* centered between logo and locale */
+        }
+
+        & .links.locale {
+            margin-inline: auto 0;
+            /* pushed to the end */
+        }
+
+        & .link {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            white-space: nowrap;
+        }
+
+        &.scrolled {
+            padding-block: var(--space-sm);
+
+            & .image {
+                height: var(--logo-height-scrolled);
+            }
+        }
+
+        /* index page: floats over the intro instead of taking space */
+        &.overlay {
+            position: fixed;
+            inset-inline: 0;
+        }
+    }
+
+    /* --- dropdown --------------------------------------------------------- */
+    /* <div class="dropdown"> <a class="link trigger">…</a> <div class="menu">��������</div> </div>
+       A .dropdown inside a .menu flies out to the side. */
+    .dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        &>.menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            inset-inline-start: 0;
+            z-index: var(--z-overlay);
+            flex-direction: column;
+            min-width: max-content;
+        }
+
+        &:is(:hover, :focus-within)>.menu {
+            display: flex;
+        }
+
+        & .menu> :is(a, span, .dropdown) {
+            padding: var(--space-sm) .75rem;
+            white-space: nowrap;
+        }
+
+        & .menu .dropdown>.menu {
+            top: 0;
+            inset-inline: auto 100%;
+        }
+    }
+
+    /* --- breadcrumb ------------------------------------------------------- */
+    /* <nav class="breadcrumb"> <a>…</a> <span class="separator">/</span> <span class="current">…</span> </nav> */
+    .breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: var(--space-md) var(--gutter);
+    }
+
+    /* --- content (markdown output) --------------------------------------- */
+    .content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: var(--content-width);
+        margin-inline: auto;
+        padding: 0 var(--space-md) var(--space-md);
+
+        & :is(h1, h2, h3, h4, h5, h6) {
+            margin-block: var(--space-md);
+        }
+
+        & :is(p, table, figure) {
+            margin-block: 0 var(--space-md);
+        }
+
+        & :is(ul, ol) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding-inline-start: var(--space-md);
+            margin-block-end: var(--space-md);
+        }
+
+        & li {
+            display: list-item;
+            list-style-position: inside;
+        }
+
+        &>.slider {
+            margin-block: var(--space-md);
+        }
+
+        & .table {
+            /* wrapper: <div class="table"><table>… */
+            overflow-x: hidden;
+            display: contents;
+        }
+
+        @media (max-width: 640px) {
+            & .table {
+                /* wrapper: <div class="table"><table>… */
+                overflow-x: auto;
+                display: block;
+            }
+        }
+
+        & table {
+            width: 100%;
+        }
+
+        & :is(th, td) {
+            padding: .65rem 1rem;
+            text-align: start;
+        }
+
+        /* headers stay on one line; values may wrap, .table scrolls if it's still too wide */
+        & th {
+            white-space: nowrap;
+        }
+    }
+
+    /* --- cards ------------------------------------------------------------ */
+    /* <div class="cards"> <a class="card [media]"> <div class="thumb"><img></div>
+         <div class="meta"> <h3 class="title"> <p class="excerpt"> <time class="date"> </div> </a> </div> */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(30ch, 100%), 1fr));
+        gap: var(--space-lg);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+
+        & .thumb {
+            aspect-ratio: var(--thumb-ratio);
+            overflow: hidden;
+
+            &> :is(img, video, svg) {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            &.contain> :is(img, video),
+            &>img[src$=".svg" i] {
+                object-fit: contain;
+            }
+        }
+
+        & .meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding: var(--space-md);
+        }
+
+        & :is(.title, .excerpt) {
+            margin: 0;
+            /* beats .content h3 / .content p margins */
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        /* card with a photo: text overlays the bottom of the image */
+        &.media {
+            aspect-ratio: var(--thumb-ratio);
+
+            & .meta {
+                position: absolute;
+                inset-inline: 0;
+                bottom: 0;
+                padding-block-start: var(--space-xl);
+            }
+        }
+    }
+
+    /* --- slider ----------------------------------------------------------- */
+    /* <div class="slider [full]"> <div class="track"> <div class="slide [show]"><img></div>… </div>
+         <button class="control prev"> <button class="control next">
+         <div class="dots"> <button class="dot" aria-current="true">… </div> </div> */
+    .slider {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 9 / 5;
+        max-height: var(--media-height);
+        overflow: hidden;
+        overflow-anchor: none;
+
+        &:not(:has(.slide)) {
+            display: none;
+        }
+
+        & .track {
+            display: flex;
+            direction: ltr;
+            height: 100%;
+        }
+
+        & .slide {
+            position: relative;
+            flex: 0 0 100%;
+            height: 100%;
+
+            /* inline <svg> ignores object-fit: give it
+               preserveAspectRatio="xMidYMid slice" (= cover) or the default "meet" (= contain) */
+            &> :is(img, video, svg) {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* logos/graphics: show them whole instead of cropping.
+               Automatic for .svg files; .slide.contain forces it for any image. */
+            &.contain> :is(img, video),
+            &>img[src$=".svg" i] {
+                object-fit: contain;
+            }
+        }
+
+        & .control {
+            position: absolute;
+            top: 50%;
+            translate: 0 -50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+
+        & .control.prev {
+            inset-inline-start: var(--space-sm);
+        }
+
+        & .control.next {
+            inset-inline-end: var(--space-sm);
+        }
+
+        & .dots {
+            position: absolute;
+            inset-inline: 0;
+            bottom: var(--space-sm);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xs);
+        }
+
+        & .dot {
+            width: .6rem;
+            height: .6rem;
+        }
+
+        /* a card used as a slide fills the slide instead of keeping its own ratio */
+        & .slide.card {
+            aspect-ratio: auto;
+
+            & .thumb {
+                aspect-ratio: auto;
+                height: 100%;
+            }
+        }
+
+        /* fills its positioned parent (intro background) */
+        &.full {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            aspect-ratio: auto;
+            max-height: none;
+        }
+    }
+
+    /* --- intro (index hero) ---------------------------------------------- */
+    /* <section class="intro"> <div class="slider full">…</div>
+         <div class="caption"> <h1> <p> <a class="button"> </div> </section> */
+    .intro {
+        position: relative;
+        min-height: 100vh;
+        margin-block-end: clamp(1rem, 10vh, 5rem);
+
+        & .caption {
+            position: absolute;
+            inset-block-end: var(--space-xl);
+            inset-inline: var(--space-md);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            padding: var(--space-md);
+        }
+    }
+
+    /* --- button ----------------------------------------------------------- */
+    /* <a class="button [inverse]"> */
+    .button {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        width: fit-content;
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    /* --- tooltip ---------------------------------------------------------- */
+    /* <span class="tooltip">term <span class="tip">explanation</span></span> */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+
+        & .tip {
+            position: absolute;
+            inset-inline: 0;
+            top: 1rem;
+            z-index: 1;
+            width: max-content;
+            max-width: 30ch;
+            padding: var(--space-sm) var(--space-md);
+            visibility: hidden;
+        }
+
+        &:is(:hover, :focus-within) .tip {
+            visibility: visible;
+        }
+    }
+
+    /* --- footer ----------------------------------------------------------- */
+    /* <footer class="footer"> <a class="image"><svg|img></a> <div>…</div>… </footer> */
+    .footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: start;
+        gap: clamp(var(--space-md), 10vw, var(--space-xl));
+        padding: var(--space-lg) var(--gutter);
+
+        &>* {
+            flex: 1 1 12rem;
+            min-width: 0;
+        }
+
+        & .image {
+            flex: 0 0 auto;
+
+            &> :is(img, svg) {
+                width: 240px;
+                height: auto;
+            }
+        }
+
+        & :is(h1, h2, h3, h4, h5, h6) {
+            margin-block: 0 var(--space-md);
+        }
+
+        & li {
+            display: list-item;
+            list-style-position: inside;
+        }
+    }
+
+    /* --- phone ------------------------------------------------------------ */
+    /* nav becomes a vertical, fully expanded tap tree (no JS needed) */
+    @media (max-width: 640px) {
+
+        .navigation,
+        .navigation.overlay {
+            position: static;
+            flex-direction: column;
+            align-items: stretch;
+            gap: var(--space-sm);
+
+            & .image {
+                margin-inline: auto;
+                height: var(--logo-height-mobile);
+            }
+
+            & .links,
+            & .links.locale {
+                flex-direction: column;
+                align-items: stretch;
+                margin-inline: 0;
+            }
+        }
+
+        .dropdown {
+            position: static;
+            flex-direction: column;
+            align-items: flex-start;
+
+            &>.menu,
+            & .menu .dropdown>.menu {
+                display: flex;
+                position: static;
+                min-width: 0;
+                padding-inline-start: var(--space-md);
+            }
+        }
+    }
+}
+
+/* ========================================================================== */
+@layer utilities {
+    .row {
+        display: flex;
+        flex-direction: row;
+        gap: var(--space-md);
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+        gap: 3rem;
+    }
+
+    .wrap {
+        flex-wrap: wrap;
+    }
+
+    .center {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .middle {
+        align-items: center;
+    }
+
+    .between {
+        justify-content: space-between;
+    }
+
+    .around {
+        justify-content: space-around;
+    }
+
+    /* min-width: 0 lets flex items shrink instead of overflowing */
+    .grow,
+    .f1 {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .f2 {
+        flex: 2;
+        min-width: 0;
+    }
+
+    .f3 {
+        flex: 3;
+        min-width: 0;
+    }
+
+    .f4 {
+        flex: 4;
+        min-width: 0;
+    }
+
+    .gap-0 {
+        gap: 0;
+    }
+
+    .gap-sm {
+        gap: var(--space-sm);
+    }
+
+    .gap-md {
+        gap: var(--space-md);
+    }
+
+    .gap-lg {
+        gap: var(--space-lg);
+    }
+
+    .gap-xl {
+        gap: var(--space-xl);
+    }
+
+    .p-0 {
+        padding: 0;
+    }
+
+    .p-sm {
+        padding: var(--space-sm);
+    }
+
+    .p-md {
+        padding: var(--space-md);
+    }
+
+    .p-lg {
+        padding: var(--space-lg);
+    }
+
+    .mx-auto {
+        margin-inline: auto;
+    }
+
+    .self-center {
+        align-self: center;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    /* hidden from sight, still read by screen readers (display:none hides from both) */
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+        .row {
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+        }
+    }
+}
